@@ -1,42 +1,44 @@
-  // Create free website with both tracking codes
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SX1L6D9120"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Page</title>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX1L6D9120"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-SX1L6D9120');
-</script>
+    gtag('config', 'G-SX1L6D9120');
+  </script>
+  
   <!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/146723272.js"></script>
-<!-- End of HubSpot Embed Code -->
-  </head>
-  <body>
-    <form id="contact-form">
-      <input type="email" name="email" 
-  placeholder="Email">
-      <button type="submit">Subscribe</button>
-    </form>
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/146723272.js"></script>
+  <!-- End of HubSpot Embed Code -->
+</head>
+<body>
+  <form id="contact-form">
+    <input type="email" name="email" placeholder="Email">
+    <button type="submit">Subscribe</button>
+  </form>
 
-    <script>
-      // Track form submission in both systems
-      document.getElementById('contact-form').addE
-  ventListener('submit', async (e) => {
-        e.preventDefault();
+  <script>
+    // Track form submission in both systems
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-        // GA4 event
-        gtag('event', 'generate_lead', {
-          currency: 'USD',
-          value: 10
-        });
-
-        // HubSpot form submission
-        // This creates a contact in HubSpot
+      // GA4 event
+      gtag('event', 'generate_lead', {
+        currency: 'USD',
+        value: 10
       });
-    </script>
-  </body>
-  </html>
+
+      // HubSpot form submission
+      // This creates a contact in HubSpot
+    });
+  </script>
+</body>
+</html>
