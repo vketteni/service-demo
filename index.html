@@ -12,7 +12,23 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-SX1L6D9120');
+    gtag('config', 'G-SX1L6D9120', {
+      enhanced_measurement: {
+        scrolls: true,
+        outbound_clicks: true,
+        site_search: false,
+        video_engagement: false,
+        file_downloads: true,
+        form_interactions: true
+      },
+      page_title: document.title,
+      page_location: window.location.href
+    });
+    
+    // Set custom parameters
+    gtag('config', 'G-SX1L6D9120', {
+      custom_map: {'custom_parameter_1': 'source_medium'}
+    });
   </script>
   
   <!-- Start of HubSpot Embed Code -->
@@ -29,15 +45,52 @@
     // Track form submission in both systems
     document.getElementById('contact-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      const email = e.target.email.value;
 
-      // GA4 event
+      // GA4 conversion event
       gtag('event', 'generate_lead', {
         currency: 'USD',
-        value: 10
+        value: 10,
+        lead_type: 'email_signup',
+        form_name: 'contact_form'
+      });
+      
+      // Additional GA4 tracking
+      gtag('event', 'sign_up', {
+        method: 'email'
       });
 
       // HubSpot form submission
-      // This creates a contact in HubSpot
+      if (window.hbspt) {
+        window.hbspt.forms.create({
+          region: "eu1",
+          portalId: "146723272",
+          formId: "your-form-id"
+        });
+      }
+      
+      console.log('Form submitted:', email);
+    });
+    
+    // Track scroll depth manually for better control
+    let scrollTracked = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTracked && (window.scrollY / document.body.scrollHeight) > 0.9) {
+        gtag('event', 'scroll', {
+          scroll_depth: '90%'
+        });
+        scrollTracked = true;
+      }
+    });
+    
+    // Track time on page
+    let startTime = Date.now();
+    window.addEventListener('beforeunload', () => {
+      const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+      gtag('event', 'page_engagement', {
+        engagement_time_msec: timeOnPage * 1000
+      });
     });
   </script>
 </body>
